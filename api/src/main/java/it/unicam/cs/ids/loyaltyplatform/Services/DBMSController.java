@@ -28,4 +28,24 @@ public class DBMSController {
         PreparedStatement prepareStatement = conn.prepareStatement(query);
         prepareStatement.executeUpdate();
     }
+
+    public static ResultSet selectAllFromTable(String table) throws SQLException {
+        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM " + table);
+        return preparedStatement.executeQuery();
+    }
+
+    public static int getNumeroRighe(String query) {
+        try{
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            if(resultSet.last())
+                return resultSet.getRow();
+            else return 0;
+        } catch (Exception e){
+            System.out.println("Errore nel conteggio delle righe");
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }
