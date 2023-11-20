@@ -18,11 +18,30 @@ public class ProgrammaFedelta {
         this.descrizione = descrizione;
     }
 
+    public  ProgrammaFedelta(String nome){
+        this.id = randomInt();
+        this.nome = nome;
+    }
+
+    public ProgrammaFedelta(int id, String nome){
+        this.id = id;
+        this.nome = nome;
+    }
 
     private int randomInt() {
         double randomInRange = Math.random() * 1000;
         return (int) randomInRange;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
 }
