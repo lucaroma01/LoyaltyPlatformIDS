@@ -31,6 +31,17 @@ public class ControllerProgrammaFedelta {
         DBMSController.insertQuery(query);
     }
 
+    public List<ProgrammaFedelta> visualizzaProgrammiPunti() throws SQLException {
+        ResultSet risultato1 = DBMSController.selectAllFromTable("programmaPunti");
+        while (risultato1.next()) {
+            ProgrammaFedelta programmaFedelta = new ProgrammaPunti(risultato1.getInt("id_programmaPunti"),
+                    risultato1.getString("nome_programmaPunti"), risultato1.getString("descrizione_programmaPunti"),
+                    risultato1.getInt("valorexpunto"), risultato1.getInt("totpunti"));
+            this.listaProgrammi.add(programmaFedelta);
+        }
+        return this.listaProgrammi;
+    }
+
     private boolean searchById(int id) {
         for(ProgrammaFedelta p : this.listaProgrammi){
             if(p.getId() == id)
@@ -52,5 +63,17 @@ public class ControllerProgrammaFedelta {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        String string ="";
+        for (ProgrammaFedelta pf : listaProgrammi ){
+            string+= "id: ["+pf.getId()+"] \n" +
+                    "nome: ["+pf.getNome()+"] \n" +
+                    "descrizione: ["+pf.getDescrizione()+"]\n" +
+                    "------------------------------------\n";
+        }
+        return string;
     }
 }
