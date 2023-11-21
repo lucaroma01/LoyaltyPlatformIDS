@@ -17,7 +17,7 @@ public class ControllerProgrammaFedelta {
         this.listaProgrammi = new ArrayList<>();
     }
 
-    public void addProgrammaFedelta(ProgrammaFedelta programmaFedelta) {
+    public void addProgrammaFedelta(ProgrammaFedelta programmaFedelta) throws SQLException {
         if(searchById(programmaFedelta.getId()))
             throw new IllegalArgumentException("Programma gia inserito");
         listaProgrammi.add(programmaFedelta);
@@ -28,12 +28,28 @@ public class ControllerProgrammaFedelta {
         if(programmaFedelta instanceof ProgrammaLivelli programmaLivelli) {
             query = "INSERT INTO programmalivelli (id_pl, nome_pl, descrizione_pl, percentualelivelloximporto, puntilivello, livellomax ) VALUES('" + programmaLivelli.getId() + "', '" + programmaLivelli.getNome() + "', '" + programmaLivelli.getDescrizione() + "', '" + programmaLivelli.getPercentualeLivelloXImporto() + "', '" + programmaLivelli.getPuntiLivello()+ "', '" + programmaLivelli.getLivelloMax() + "')";
         }
+        DBMSController.insertQuery(query);
     }
 
     private boolean searchById(int id) {
         for(ProgrammaFedelta p : this.listaProgrammi){
             if(p.getId() == id)
                 return  true;
+        }
+        return false;
+    }
+    public boolean removeById(int id) throws SQLException {
+        for (ProgrammaFedelta p : this.listaProgrammi) {
+            if (id == p.getId())
+                this.listaProgrammi.remove(p);
+            String query = "";
+            if (p instanceof ProgrammaPunti programmaPunti) {
+                query = "DELETE FROM programmapunti WHERE nome_pp='" + programmaPunti.getNome() + "'";
+            } else if (p instanceof ProgrammaLivelli programmaLivelli) {
+                query = "DELETE FROM programmalivelli WHERE nome_pl='" + programmaLivelli.getNome() + "';";
+            }
+            DBMSController.removeQuery(query);
+            return true;
         }
         return false;
     }
