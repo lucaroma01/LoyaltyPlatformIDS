@@ -1,5 +1,7 @@
 package it.unicam.cs.ids.loyaltyplatform.Model;
 
+import java.util.Objects;
+
 public class VisitatoreGenerico {
     private int id;
     private String Nome;
@@ -73,5 +75,30 @@ public class VisitatoreGenerico {
     public String getPassword() {
         return password;
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        VisitatoreGenerico that = (VisitatoreGenerico) o;
+        return Objects.equals(id, that.id) && Objects.equals(email, that.email) && Objects.equals(username, that.username);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email, username);
+    }
+
+    @Override
+    public String toString() {
+        return "VisitatoreGenerico: " +
+                "id=" + id +
+                ", Nome='" + Nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", indirizzo='" + indirizzo + '\'' +
+                ", email='" + email + '\'' +
+                ", telefono=" + telefono +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '.';
+    }
 }
