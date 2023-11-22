@@ -41,6 +41,17 @@ public class ControllerProgrammaFedelta {
         }
         return this.listaProgrammi;
     }
+    public List<ProgrammaFedelta> visualizzaProgrammiLivelli() throws SQLException {
+        ResultSet risultato1 = DBMSController.selectAllFromTable("programmaLivelli");
+        while (risultato1.next()) {
+            ProgrammaFedelta programmaFedelta = new ProgrammaLivelli(risultato1.getInt("id_programmaLivelli"),
+                    risultato1.getString("nome_programmaLivelli"), risultato1.getString("descrizione_programmaLivelli"),
+                    risultato1.getInt("livellomax"), risultato1.getInt("totpunti"),
+                    risultato1.getInt("valorexpercentualelivello"));
+            this.listaProgrammi.add(programmaFedelta);
+        }
+        return this.listaProgrammi;
+    }
 
     private boolean searchById(int id) {
         for(ProgrammaFedelta p : this.listaProgrammi){
