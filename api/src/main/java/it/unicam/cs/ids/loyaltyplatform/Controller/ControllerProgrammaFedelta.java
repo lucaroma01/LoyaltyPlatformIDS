@@ -17,7 +17,7 @@ public class ControllerProgrammaFedelta {
         this.listaProgrammi = new ArrayList<>();
     }
 
-    public void addProgrammaFedelta(ProgrammaFedelta programmaFedelta) {
+    public void addProgrammaFedelta(ProgrammaFedelta programmaFedelta) throws SQLException {
         if(searchById(programmaFedelta.getId()))
             throw new IllegalArgumentException("Programma gia inserito");
         listaProgrammi.add(programmaFedelta);
@@ -28,6 +28,29 @@ public class ControllerProgrammaFedelta {
         if(programmaFedelta instanceof ProgrammaLivelli programmaLivelli) {
             query = "INSERT INTO programmalivelli (id_pl, nome_pl, descrizione_pl, percentualelivelloximporto, puntilivello, livellomax ) VALUES('" + programmaLivelli.getId() + "', '" + programmaLivelli.getNome() + "', '" + programmaLivelli.getDescrizione() + "', '" + programmaLivelli.getPercentualeLivelloXImporto() + "', '" + programmaLivelli.getPuntiLivello()+ "', '" + programmaLivelli.getLivelloMax() + "')";
         }
+        DBMSController.insertQuery(query);
+    }
+
+    public List<ProgrammaFedelta> visualizzaProgrammiPunti() throws SQLException {
+        ResultSet risultato1 = DBMSController.selectAllFromTable("programmaPunti");
+        while (risultato1.next()) {
+            ProgrammaFedelta programmaFedelta = new ProgrammaPunti(risultato1.getInt("id_programmaPunti"),
+                    risultato1.getString("nome_programmaPunti"), risultato1.getString("descrizione_programmaPunti"),
+                    risultato1.getInt("valorexpunto"), risultato1.getInt("totpunti"));
+            this.listaProgrammi.add(programmaFedelta);
+        }
+        return this.listaProgrammi;
+    }
+    public List<ProgrammaFedelta> visualizzaProgrammiLivelli() throws SQLException {
+        ResultSet risultato1 = DBMSController.selectAllFromTable("programmaLivelli");
+        while (risultato1.next()) {
+            ProgrammaFedelta programmaFedelta = new ProgrammaLivelli(risultato1.getInt("id_programmaLivelli"),
+                    risultato1.getString("nome_programmaLivelli"), risultato1.getString("descrizione_programmaLivelli"),
+                    risultato1.getInt("livellomax"), risultato1.getInt("totpunti"),
+                    risultato1.getInt("valorexpercentualelivello"));
+            this.listaProgrammi.add(programmaFedelta);
+        }
+        return this.listaProgrammi;
     }
 
     private boolean searchById(int id) {
@@ -36,5 +59,32 @@ public class ControllerProgrammaFedelta {
                 return  true;
         }
         return false;
+    }
+    public boolean removeById(int id) throws SQLException {
+        for (ProgrammaFedelta p : this.listaProgrammi) {
+            if (id == p.getId())
+                this.listaProgrammi.remove(p);
+            String query = "";
+            if (p instanceof ProgrammaPunti programmaPunti) {
+                query = "DELETE FROM programmapunti WHERE nome_pp='" + programmaPunti.getNome() + "'";
+            } else if (p instanceof ProgrammaLivelli programmaLivelli) {
+                query = "DELETE FROM programmalivelli WHERE nome_pl='" + programmaLivelli.getNome() + "';";
+            }
+            DBMSController.removeQuery(query);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        String string ="";
+        for (ProgrammaFedelta pf : listaProgrammi ){
+            string+= "id: ["+pf.getId()+"] \n" +
+                    "nome: ["+pf.getNome()+"] \n" +
+                    "descrizione: ["+pf.getDescrizione()+"]\n" +
+                    "------------------------------------\n";
+        }
+        return string;
     }
 }

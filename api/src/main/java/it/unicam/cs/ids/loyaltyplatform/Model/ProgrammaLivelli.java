@@ -24,4 +24,15 @@ public class ProgrammaLivelli extends ProgrammaFedelta {
     public int getLivelloMax() {
         return livelloMax;
     }
+    public void setLivelloMax(int livelloMax) {
+        this.livelloMax = livelloMax;
+    }
+
+    public void setPuntiLivello(int puntiLivello) {
+        this.puntiLivello = puntiLivello;
+    }
+
+    public void setPercentualeLivelloXImporto(int percentualeLivelloXImporto) {
+        this.percentualeLivelloXImporto = percentualeLivelloXImporto;
+    }
 }

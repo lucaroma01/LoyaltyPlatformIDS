@@ -14,6 +14,13 @@ public class ProgrammaPunti extends ProgrammaFedelta{
     public int getImportoXCostantePunti() {
         return importoXCostantePunti;
     }
+    public void setImportoXCostantePunti(int importoXCostantePunti) {
+        this.importoXCostantePunti = importoXCostantePunti;
+    }
+
+    public void setTotPunti(int totPunti) {
+        this.totPunti = totPunti;
+    }
 
     public int getTotPunti() {
         return totPunti;
