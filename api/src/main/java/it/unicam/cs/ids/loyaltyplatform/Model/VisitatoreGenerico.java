@@ -42,4 +42,36 @@ public class VisitatoreGenerico {
         return intRandom;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return Nome;
+    }
+
+    public String getCognome() {
+        return cognome;
+    }
+
+    public String getIndirizzo() {
+        return indirizzo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public int getTelefono() {
+        return telefono;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
 }
