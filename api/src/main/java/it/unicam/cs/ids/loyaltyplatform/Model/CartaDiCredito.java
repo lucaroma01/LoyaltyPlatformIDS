@@ -31,4 +31,23 @@ public class CartaDiCredito {
         }
     }
 
+    public int getNumeroCarta() {
+        return numeroCarta;
+    }
+
+    public Date getDateScadenza() {
+        return dateScadenza;
+    }
+
+    public int getCVV() {
+        return CVV;
+    }
+
+    public int getPin() {
+        return pin;
+    }
+
+    public double getSaldoCarta() {
+        return saldoCarta;
+    }
 }
