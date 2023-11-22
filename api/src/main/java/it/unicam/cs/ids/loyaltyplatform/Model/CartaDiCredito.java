@@ -1,5 +1,7 @@
 package it.unicam.cs.ids.loyaltyplatform.Model;
 
+import it.unicam.cs.ids.loyaltyplatform.Services.DBMSController;
+
 import java.sql.SQLException;
 import java.util.Date;
 public class CartaDiCredito {
@@ -30,8 +32,20 @@ public class CartaDiCredito {
             this.saldoCarta = saldoCarta;
         }
     }
+    public void incrementaSaldo(int importoAggiunto) throws SQLException {
+        this.saldoCarta+=importoAggiunto;
+        double incremento=this.saldoCarta;
+        String query="UPDATE cartadicredito SET saldocarta = '" +incremento+ "' WHERE id_cc = '" + this.getNumeroCarta() + "'";
+        DBMSController.insertQuery(query);
+    }
 
-    public int getNumeroCarta() {
+    public void decrementaSaldo(int importoDetratto) throws SQLException {
+        this.saldoCarta -= importoDetratto;
+        double decremento = this.saldoCarta;
+        String query = "UPDATE cartadicredito SET saldocarta = '" + decremento + "' WHERE id_cc = '" + this.getNumeroCarta() + "'";
+        DBMSController.insertQuery(query);
+    }
+        public int getNumeroCarta() {
         return numeroCarta;
     }
 
