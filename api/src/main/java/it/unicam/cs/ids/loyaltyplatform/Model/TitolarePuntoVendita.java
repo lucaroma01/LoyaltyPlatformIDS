@@ -8,10 +8,10 @@ public class TitolarePuntoVendita extends VisitatoreGenerico{
 
     private final ControllerProgrammaFedelta creaProgrammaFedelta;
 
-    private boolean abilitato;
     private CartaDiCredito carta;
+    private boolean abilitato;
 
-    public TitolarePuntoVendita(int id, String nome, String cognome, String indirizzo, String emailBusiness, String username, String password, int telefono,boolean abilitato, CartaDiCredito carta) {
+    public TitolarePuntoVendita(int id, String nome, String cognome, String indirizzo, String emailBusiness, String username, String password, int telefono, CartaDiCredito carta, boolean abilitato ) {
         super(id, nome, cognome, indirizzo, emailBusiness, username, password, telefono);
         this.carta = carta;
         this.abilitato=abilitato;

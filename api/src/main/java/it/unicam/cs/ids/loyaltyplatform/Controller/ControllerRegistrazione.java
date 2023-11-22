@@ -1,5 +1,6 @@
 package it.unicam.cs.ids.loyaltyplatform.Controller;
 
+import it.unicam.cs.ids.loyaltyplatform.Model.ErrorDate;
 import it.unicam.cs.ids.loyaltyplatform.Model.TitolarePuntoVendita;
 import it.unicam.cs.ids.loyaltyplatform.Model.VisitatoreGenerico;
 import it.unicam.cs.ids.loyaltyplatform.Services.DBMSController;
@@ -26,6 +27,25 @@ public class ControllerRegistrazione {
             String query = "INSERT INTO titolari (id_t, nome_t, cognome_t, indirizzo_t, email_t, username_t, password, abilitato, telefono_t) VALUES('" + t.getId() + "','" + t.getNome() + "','" + t.getCognome() + "','" + t.getIndirizzo() + "','" + t.getEmail() + "','" + t.getUsername() + "' ,'" + t.getPassword() + "' ,'" + t.isAbilitato() + "', '" + t.getTelefono() + "' )";
             DBMSController.insertQuery(query);
         }
+    }
+
+    public void addTitolarePuntoVendita(TitolarePuntoVendita t) throws SQLException, ErrorDate {
+        String query = "UPDATE titolari SET abilitato = 'true' WHERE id_t = '" + t.getId() + "'";
+        DBMSController.insertQuery(query);
+    }
+
+    public List<TitolarePuntoVendita> getAllAbilitati() throws SQLException, ErrorDate {
+        String t = "titolari";
+        ResultSet resultSet = DBMSController.selectAllFromTable(t);
+        while(resultSet.next()){
+            TitolarePuntoVendita titolare = new TitolarePuntoVendita(resultSet.getInt("id_t"),
+                    resultSet.getString("nome_t"),  resultSet.getString("cognome_t"),
+                    resultSet.getString("indirizzo_t"), resultSet.getString("email_t"),
+                    resultSet.getString("username_t"), resultSet.getString("password_t"),
+                    resultSet.getInt("telefono_t"), resultSet.getBoolean("abilitato"));
+            this.titolariAttivita.add(titolare);
+        }
+        return titolariAttivita;
     }
 
     /**
