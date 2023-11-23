@@ -12,8 +12,34 @@ public class CartaFedelta {
     private Cliente cliente;
     private int puntiCorrenti;
     private int livelloAttuale;
-
     private int percentualeLivello;
+
+    public CartaFedelta(String nomeCarta, PuntoVendita cartaPuntoVendita, Cliente cliente, int puntiCorrenti, int livelliCorrenti, int percentualeLivello) {
+        this.id=randomInt();
+        this.nomeCarta = nomeCarta;
+        this.puntoVendita = puntoVendita;
+        this.cliente = cliente;
+        this.puntiCorrenti = puntiCorrenti;
+        this.livelloAttuale = livelloAttuale;
+        this.percentualeLivello = percentualeLivello;
+    }
+
+    public CartaFedelta(int id, String nomeCarta, Date scadenza, PuntoVendita cartaPuntoVendita, Cliente cliente, int puntiCorrenti, int livelliCorrenti, int percentualeLivello) {
+        this.id = id;
+        this.nomeCarta = nomeCarta;
+        this.scadenza = scadenza;
+        this.puntoVendita = puntoVendita;
+        this.cliente = cliente;
+        this.puntiCorrenti = puntiCorrenti;
+        this.livelloAttuale = livelloAttuale;
+        this.percentualeLivello = percentualeLivello;
+    }
+
+    private int randomInt(){
+        double doubleRandom=Math.random()*6000;
+        int intRandom= (int) doubleRandom;
+        return intRandom;
+    }
 
     public String getNomeCarta() {
         return nomeCarta;
