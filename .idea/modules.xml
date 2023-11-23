@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/LoyaltyPlatform.iml" filepath="$PROJECT_DIR$/.idea/LoyaltyPlatform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LoyaltyPlatform.iml" filepath="$PROJECT_DIR$/.idea/modules/LoyaltyPlatform.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/api/LoyaltyPlatform.api.iml" filepath="$PROJECT_DIR$/.idea/modules/api/LoyaltyPlatform.api.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/api/LoyaltyPlatform.api.main.iml" filepath="$PROJECT_DIR$/.idea/modules/api/LoyaltyPlatform.api.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/api/LoyaltyPlatform.api.test.iml" filepath="$PROJECT_DIR$/.idea/modules/api/LoyaltyPlatform.api.test.iml" />

@@ -16,4 +16,17 @@ public class Cliente extends VisitatoreGenerico {
         this.carteFedelta = new ArrayList<>();
         this.controllerCarta = new ControllerCarta();
     }
+    public List<CartaFedelta> getCarteFedelta() {
+        return carteFedelta;
+    }
+
+    public void creaCarta(CartaFedelta cf) throws ErrorDate, SQLException {
+        for (CartaFedelta c: this.carteFedelta){
+            if(c.getPuntoVendita()==cf.getPuntoVendita()){
+                throw new ErrorDate("Non puoi creare piu di 2 carte di uno stesso Punto Vendita");
+            }
+        }
+        this.controllerCarta.addCartaFedelta(cf);
+        this.carteFedelta.add(cf);
+    }
 }
