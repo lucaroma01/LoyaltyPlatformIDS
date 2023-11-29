@@ -105,4 +105,16 @@ public class ControllerPuntoVendita {
         }
         return puntoVendita;
     }
+
+    public ProgrammaFedelta searchById(int id) {
+        ProgrammaFedelta programmaFedelta = null;
+        for(ProgrammaFedelta pf : this.listaProgrammi){
+            if(pf.getId() == id)
+                return pf;
+        }
+        if(programmaFedelta == null)
+            throw new NullPointerException();
+        return programmaFedelta;
+    }
+
 }
