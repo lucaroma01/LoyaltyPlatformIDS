@@ -15,7 +15,7 @@ public class Banca {
     public StatoPagamento verificaPagamento(TitolarePuntoVendita t) throws SQLException {
         if (statoPagamento.payment(t)){
             pagamento=StatoPagamento.PAGATO;
-        }else pagamento=StatoPagamento.In_Attesa;
+        } else pagamento=StatoPagamento.In_Attesa;
 
         return pagamento;
     }
