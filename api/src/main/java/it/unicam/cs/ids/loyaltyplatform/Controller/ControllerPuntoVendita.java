@@ -175,4 +175,26 @@ public class ControllerPuntoVendita {
         }
         return false;
     }
+    @Override
+    public String toString() {
+        String string ="";
+        for (ProgrammaFedelta pf : listaProgrammi ){
+            string+= "id: ["+pf.getId()+"] \n" +
+                    "nome: ["+pf.getNome()+"] \n" +
+                    "descrizione: ["+pf.getDescrizione()+"]\n" +
+                    "------------------------------------\n";
+        }
+        return string;
+    }
+
+    public String toStringPuntiVendita() {
+        String string ="";
+        for (PuntoVendita pv : listaPuntoVendita ){
+            string+= "id: ["+ pv.getNomePuntoVendita()+"] \n" +
+                    "nome: ["+ pv.getIndirizzo()+"] \n" +
+                    "descrizione"+ pv.getTitolare()+"]\n" +
+                    "-----------------------------------\n";
+        }
+        return string;
+    }
 }
