@@ -157,4 +157,22 @@ public class ControllerPuntoVendita {
         DBMSController.insertQuery(query);
         return percentualeDaIncrementare;
     }
+    public boolean deleteById(int id) throws SQLException {
+        if (searchById(id) == null) {
+            throw new NullPointerException("programma fedelta non esistente");
+        }
+        for (ProgrammaFedelta p : this.listaProgrammi) {
+            if (id == p.getId())
+                this.listaProgrammi.remove(p);
+            String query = "";
+            if (p instanceof ProgrammaPunti pp) {
+                query = "DELETE FROM programpuntititolare WHERE nome_ppt='" + pp.getNome() + "'";
+            } else if (p instanceof ProgrammaLivelli pl) {
+                query = "DELETE FROM programlivellititolare WHERE nome_plt='" + pl.getNome() + "';";
+            }
+            DBMSController.removeQuery(query);
+            return true;
+        }
+        return false;
+    }
 }
