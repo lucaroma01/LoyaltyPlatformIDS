@@ -116,5 +116,45 @@ public class ControllerPuntoVendita {
             throw new NullPointerException();
         return programmaFedelta;
     }
+    public Set<PuntoVendita> visualizzaPuntoVendita() throws SQLException, ErrorDate {
+        String table = "puntovendita";
+        ResultSet resultset = DBMSController.selectAllFromTable(table);
+        while (resultset.next()) {
+            ControllerRegistrazione controller = new ControllerRegistrazione();
+            TitolarePuntoVendita titolareDaAggiungere = controller.searchById(resultset.getInt("titolariId_t"));
+            PuntoVendita puntoVendita = new PuntoVendita(resultset.getString("nome_pv"),
+                    resultset.getString("indirizzo_pv"), titolareDaAggiungere);
+            this.listaPuntoVendita.add(puntoVendita);
+        }
+        return this.listaPuntoVendita;
+    }
 
+    public int incrementaPuntiCarta(int spesaEffettuata, ProgrammaPunti pp, CartaFedelta cf, Coupon coupon) throws SQLException {
+        int puntiTotalizzati=cf.getPuntiCorrenti()+(spesaEffettuata/pp.getImportoXCostantePunti());
+        String query="UPDATE cartefedelta SET punticorrenti ='"+puntiTotalizzati+"'WHERE id_cf= '"+cf.getId()+"'";
+        if(puntiTotalizzati>=pp.getTotPunti()){
+            //sblocca coupon da ritirare
+            String query1="UPDATE coupon SET clientiid_c ='"+cf.getCliente().getId()+"'WHERE id_coupon= '"+coupon.getIdCoupon()+"'";
+            int differenzapunti=puntiTotalizzati-coupon.getCostoPunti();
+            query="UPDATE cartefedelta SET punticorrenti ='"+differenzapunti+"'WHERE id_cf= '"+cf.getId()+"'";
+            DBMSController.insertQuery(query1);
+        }
+        DBMSController.insertQuery(query);
+        return puntiTotalizzati;
+    }
+
+    public int incrementaLivelloCarta(int spesaEffettuata, ProgrammaLivelli pl, CartaFedelta cf) throws SQLException {
+        int percentualeDaIncrementare=cf.getPercentualeLivello()+(spesaEffettuata/pl.getPercentualeLivelloXImporto());
+        if(percentualeDaIncrementare>=pl.getPuntiLivello()){
+            if(cf.getLivelloAttuale()<pl.getLivelloMax()){
+                int differenza=percentualeDaIncrementare-pl.getPuntiLivello();
+                int incrementaLivello=cf.getLivelloAttuale()+1;
+                String query="UPDATE cartefedelta SET livellocorrente ='"+incrementaLivello+"', percentualelivello= '"+differenza+"'WHERE id_cf= '"+cf.getId()+"'";
+                DBMSController.insertQuery(query);
+            }
+        }
+        String query="UPDATE cartefedelta SET percentualelivello= '"+percentualeDaIncrementare+"'WHERE id_cf= '"+cf.getId()+"'";
+        DBMSController.insertQuery(query);
+        return percentualeDaIncrementare;
+    }
 }

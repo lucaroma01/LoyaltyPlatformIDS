@@ -2,13 +2,13 @@ package it.unicam.cs.ids.loyaltyplatform.Model;
 
 public class PuntoVendita {
 
-    private int id;
+
     private String nomePuntoVendita;
     private String indirizzo;
     private TitolarePuntoVendita titolare;
 
-    public PuntoVendita(int id, String nomePuntoVendita, String indirizzo, TitolarePuntoVendita titolare) {
-        this.id = id;
+    public PuntoVendita( String nomePuntoVendita, String indirizzo, TitolarePuntoVendita titolare) {
+
         this.nomePuntoVendita = nomePuntoVendita;
         this.indirizzo = indirizzo;
         this.titolare = titolare;
@@ -26,7 +26,5 @@ public class PuntoVendita {
         return titolare;
     }
 
-    public int getId() {
-        return id;
-    }
+
 }

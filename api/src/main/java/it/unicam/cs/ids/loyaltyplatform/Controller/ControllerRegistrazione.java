@@ -86,13 +86,19 @@ public class ControllerRegistrazione {
         return clienti;
     }
 
-    public Cliente searchById(int id) throws SQLException, ErrorDate {
-        visualizzaClienti();
-        for(Cliente c : this.clienti){
-            if(c.getId() == id)
-                return c;
+    public TitolarePuntoVendita searchById(int id) throws SQLException, ErrorDate {
+        TitolarePuntoVendita titolare = null;
+        for (TitolarePuntoVendita t : getAllAbilitati()) {
+            if (t.getId() == id)
+                titolare = t;
         }
-        return null;
+        if (titolare == null) {
+            throw new NullPointerException();
+        }
+        return titolare;
+    }
     }
 
-}
+
+
+
