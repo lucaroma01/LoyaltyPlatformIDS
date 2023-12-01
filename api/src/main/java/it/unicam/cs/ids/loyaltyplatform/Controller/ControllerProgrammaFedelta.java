@@ -34,9 +34,9 @@ public class ControllerProgrammaFedelta {
     public List<ProgrammaFedelta> visualizzaProgrammiPunti() throws SQLException {
         ResultSet risultato1 = DBMSController.selectAllFromTable("programmaPunti");
         while (risultato1.next()) {
-            ProgrammaFedelta programmaFedelta = new ProgrammaPunti(risultato1.getInt("id_programmaPunti"),
-                    risultato1.getString("nome_programmaPunti"), risultato1.getString("descrizione_programmaPunti"),
-                    risultato1.getInt("valorexpunto"), risultato1.getInt("totpunti"));
+            ProgrammaFedelta programmaFedelta = new ProgrammaPunti(risultato1.getInt("id_pp"),
+                    risultato1.getString("nome_pp"), risultato1.getString("descrizione_pp"),
+                    risultato1.getInt("importoxcostantepunti"), risultato1.getInt("totpunti"));
             this.listaProgrammi.add(programmaFedelta);
         }
         return this.listaProgrammi;
@@ -44,10 +44,10 @@ public class ControllerProgrammaFedelta {
     public List<ProgrammaFedelta> visualizzaProgrammiLivelli() throws SQLException {
         ResultSet risultato1 = DBMSController.selectAllFromTable("programmaLivelli");
         while (risultato1.next()) {
-            ProgrammaFedelta programmaFedelta = new ProgrammaLivelli(risultato1.getInt("id_programmaLivelli"),
-                    risultato1.getString("nome_programmaLivelli"), risultato1.getString("descrizione_programmaLivelli"),
+            ProgrammaFedelta programmaFedelta = new ProgrammaLivelli(risultato1.getInt("id_pl"),
+                    risultato1.getString("nome_pl"), risultato1.getString("descrizione_pl"),
                     risultato1.getInt("livellomax"), risultato1.getInt("totpunti"),
-                    risultato1.getInt("valorexpercentualelivello"));
+                    risultato1.getInt("percentualelivelloximporto"));
             this.listaProgrammi.add(programmaFedelta);
         }
         return this.listaProgrammi;

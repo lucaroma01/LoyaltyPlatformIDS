@@ -49,11 +49,11 @@ public class ControllerPuntoVendita {
         String table="programmapuntititolare";
         ResultSet resultset= DBMSController.selectAllFromTable(table);
         while (resultset.next()){
-            int id_titolare=resultset.getInt("titolariid_t");
+            int id_titolare=resultset.getInt("titolariid");
             if(id_titolare==pv.getTitolare().getId()) {
                 ProgrammaFedelta pp = new ProgrammaPunti(resultset.getInt("id_ppt"), resultset.getString("nome_ppt"),
                         resultset.getString("descrizione_ppt"),
-                        resultset.getInt("valorexpunto_ppt"), resultset.getInt("totpunti_ppt"));
+                        resultset.getInt("importoxcostantepunti_ppt"), resultset.getInt("totpunti_ppt"));
                 this.listaProgrammi.add(pp);
                 countPunti++;
             }
@@ -71,12 +71,12 @@ public class ControllerPuntoVendita {
         String table="programmalivellititolare";
         ResultSet resultset= DBMSController.selectAllFromTable(table);
         while (resultset.next()){
-            int id_titolare=resultset.getInt("titolariid_t");
+            int id_titolare=resultset.getInt("titolariid");
             if(id_titolare==pv.getTitolare().getId()) {
                 ProgrammaFedelta pp = new ProgrammaLivelli(resultset.getInt("id_plt"), resultset.getString("nome_plt"),
                         resultset.getString("descrizione_plt"),
-                        resultset.getInt("livellomax_plt"), resultset.getInt("puntitot_plt"),
-                        resultset.getInt("valorexpercentualelivello_plt"));
+                        resultset.getInt("livellomax_plt"), resultset.getInt("puntilivello_plt"),
+                        resultset.getInt("percentualelivelloximporto_plt"));
                 this.listaProgrammi.add(pp);
                 countLivelli++;
             }
@@ -90,7 +90,7 @@ public class ControllerPuntoVendita {
                 throw new ErrorDate("Il punto vendita é gia esistente");
             }
         }
-        String query="INSERT INTO puntovendita (nome_pv, indirizzo_pv, titolariid_t ) VALUES('" + pv.getNomePuntoVendita() + "','" + pv.getIndirizzo() + "','" + pv.getTitolare().getId() + "')";
+        String query="INSERT INTO puntovendita (nome_pv, indirizzo_pv, idtitolare ) VALUES('" + pv.getNomePuntoVendita() + "','" + pv.getIndirizzo() + "','" + pv.getTitolare().getId() + "')";
         DBMSController.insertQuery(query);
     }
 
@@ -121,7 +121,7 @@ public class ControllerPuntoVendita {
         ResultSet resultset = DBMSController.selectAllFromTable(table);
         while (resultset.next()) {
             ControllerRegistrazione controller = new ControllerRegistrazione();
-            TitolarePuntoVendita titolareDaAggiungere = controller.searchById(resultset.getInt("titolariId_t"));
+            TitolarePuntoVendita titolareDaAggiungere = controller.searchById(resultset.getInt("idtitolare"));
             PuntoVendita puntoVendita = new PuntoVendita(resultset.getString("nome_pv"),
                     resultset.getString("indirizzo_pv"), titolareDaAggiungere);
             this.listaPuntoVendita.add(puntoVendita);
@@ -134,7 +134,7 @@ public class ControllerPuntoVendita {
         String query="UPDATE cartefedelta SET punticorrenti ='"+puntiTotalizzati+"'WHERE id_cf= '"+cf.getId()+"'";
         if(puntiTotalizzati>=pp.getTotPunti()){
             //sblocca coupon da ritirare
-            String query1="UPDATE coupon SET clientiid_c ='"+cf.getCliente().getId()+"'WHERE id_coupon= '"+coupon.getIdCoupon()+"'";
+            String query1="UPDATE coupon SET idcliente ='"+cf.getCliente().getId()+"'WHERE id_coupon= '"+coupon.getIdCoupon()+"'";
             int differenzapunti=puntiTotalizzati-coupon.getCostoPunti();
             query="UPDATE cartefedelta SET punticorrenti ='"+differenzapunti+"'WHERE id_cf= '"+cf.getId()+"'";
             DBMSController.insertQuery(query1);

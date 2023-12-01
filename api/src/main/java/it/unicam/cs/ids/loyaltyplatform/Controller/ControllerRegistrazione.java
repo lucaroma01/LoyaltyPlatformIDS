@@ -97,7 +97,19 @@ public class ControllerRegistrazione {
         }
         return titolare;
     }
+
+    public Cliente getById(int id) throws SQLException, ErrorDate {
+        Cliente cliente = null;
+        for(Cliente c : this.visualizzaClienti()){
+            if(c.getId() == id)
+                cliente = cliente;
+        }
+        if(cliente == null)
+            throw new NullPointerException();
+        return cliente;
     }
+
+}
 
 
 

@@ -32,7 +32,7 @@ public class ControllerCoupon {
             ControllerRegistrazione cr = new ControllerRegistrazione();
             ControllerPuntoVendita cpv = new ControllerPuntoVendita();
             cr.visualizzaClienti();
-            Cliente cliente = cr.searchById(resultSet.getInt("clienteid"));
+            Cliente cliente = cr.getById(resultSet.getInt("clienteid"));
             cpv.visualizzaProgrammiPuntiTitolare(pv);
             cpv.visualizzaProgrammiLivelliTitolare(pv);
             ProgrammaFedelta pf = cpv.searchById(resultSet.getInt("id_ppt"));
