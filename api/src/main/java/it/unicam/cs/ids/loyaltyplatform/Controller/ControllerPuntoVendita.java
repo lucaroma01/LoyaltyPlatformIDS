@@ -175,6 +175,17 @@ public class ControllerPuntoVendita {
         }
         return false;
     }
+    public PuntoVendita cercaPuntoVendita(String nome) throws SQLException, ErrorDate {
+        PuntoVendita puntoVendita = null;
+        for (PuntoVendita pv : visualizzaPuntoVendita()) {
+            if (pv.getNomePuntoVendita().equals(nome))
+                puntoVendita=pv;
+        }
+        if (puntoVendita == null) {
+            throw new NullPointerException();
+        }
+        return puntoVendita;
+    }
     @Override
     public String toString() {
         String string ="";
