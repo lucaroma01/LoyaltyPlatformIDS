@@ -3,6 +3,7 @@ package it.unicam.cs.ids.loyaltyplatform.Controller;
 import it.unicam.cs.ids.loyaltyplatform.Model.*;
 import it.unicam.cs.ids.loyaltyplatform.Services.DBMSController;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,25 @@ public class ControllerCarta {
         }
         else throw new ErrorDate("Carta esistente");
     }
-
+    public List<CartaFedelta> visualizzaCartaFedelta(Cliente c) throws SQLException, ErrorDate {
+        String table="cartefedelta";
+        ResultSet resultSet= DBMSController.selectAllFromTable(table);
+        while (resultSet.next()){
+            if(c.getId()== resultSet.getInt("clientiid")){
+                ControllerRegistrazione cr= new ControllerRegistrazione();
+                cr.visualizzaClienti();
+                ControllerPuntoVendita cp= new ControllerPuntoVendita();
+                cp.visualizzaPuntoVendita();
+                PuntoVendita aggiungiPuntoVendita= cp.findById(resultSet.getString("puntovenditanome_pv"));
+                Cliente aggiungiCliente= cr.getById(resultSet.getInt("clientiid"));
+                CartaFedelta cf= new CartaFedelta(resultSet.getInt("id_cf"), resultSet.getString("nome_cf"),
+                        resultSet.getDate("scadenza_cf"), aggiungiPuntoVendita,
+                        aggiungiCliente, resultSet.getInt("punticorrenti"),
+                        resultSet.getInt("livellocorrente"), resultSet.getInt("percentualelivello"));
+                this.listaCarteFedelta.add(cf);
+            }
+        }
+        return this.listaCarteFedelta;
+    }
 
 }
