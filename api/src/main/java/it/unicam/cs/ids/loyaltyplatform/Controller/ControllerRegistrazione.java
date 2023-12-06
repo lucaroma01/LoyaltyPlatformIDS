@@ -86,6 +86,13 @@ public class ControllerRegistrazione {
         return clienti;
     }
 
+    public void registrazioneCommesso(CommessoPuntoVendita cpv) throws  SQLException {
+        if(validazioneDati(cpv)){
+            String query = "INSERT INTO commessopuntovendita (id_cp, nome_cp, cognome_cp, indirizzo_cp, email_cp, username_cp, password_cp, telefono_cp, nomepuntovendita_cp";
+            DBMSController.insertQuery(query);
+        }
+    }
+
     public TitolarePuntoVendita searchById(int id) throws SQLException, ErrorDate {
         TitolarePuntoVendita titolare = null;
         for (TitolarePuntoVendita t : getAllAbilitati()) {
