@@ -12,6 +12,7 @@ public class ControllerRegistrazione {
 
     private List<TitolarePuntoVendita> titolariAttivita;
     private List<Cliente> clienti;
+    private List<CommessoPuntoVendita> commessi;
     private Banca banca;
 
     public ControllerRegistrazione() {
@@ -91,6 +92,24 @@ public class ControllerRegistrazione {
             String query = "INSERT INTO commessopuntovendita (id_cp, nome_cp, cognome_cp, indirizzo_cp, email_cp, username_cp, password_cp, telefono_cp, nomepuntovendita_cp";
             DBMSController.insertQuery(query);
         }
+    }
+
+    public List<CommessoPuntoVendita> visualizzaCommessi() throws SQLException, ErrorDate {
+        String table = "comessipuntovendita";
+        ResultSet resultSet = DBMSController.selectAllFromTable(table);
+        while(resultSet.next()){
+            ControllerPuntoVendita conn = new ControllerPuntoVendita();
+            getAllAbilitati();
+            conn.visualizzaPuntoVendita();
+            PuntoVendita pv = conn.cercaPuntoVendita(resultSet.getString("nomepuntovendita_cp"));
+            CommessoPuntoVendita commesso = new CommessoPuntoVendita(resultSet.getInt("id_cp"),
+                    resultSet.getString("nome_cp"),  resultSet.getString("cognome_cp"),
+                    resultSet.getString("indirizzo_cp"), resultSet.getString("email_cp"),
+                    resultSet.getString("username_cp"), resultSet.getString("password_cp"),
+                    resultSet.getInt("telefono_cp"), pv);
+            this.commessi.add(commesso);
+        }
+        return commessi;
     }
 
     public TitolarePuntoVendita searchById(int id) throws SQLException, ErrorDate {
