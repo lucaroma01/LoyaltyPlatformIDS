@@ -10,7 +10,11 @@ public class Cliente extends VisitatoreGenerico {
 
     private List<CartaFedelta> carteFedelta;
     private ControllerCarta controllerCarta;
-
+    public Cliente(String nome, String cognome, String indirizzo,String email, String username, String password, int telefono) {
+        super(nome, cognome, indirizzo, email, username, password, telefono);
+        this.carteFedelta = new ArrayList<>();
+        this.controllerCarta= new ControllerCarta();
+    }
     public Cliente(int id , String nome, String cognome, String indirizzo, String email, String username, String password, int telefono) {
         super(id, nome, cognome, indirizzo, email, username, password, telefono);
         this.carteFedelta = new ArrayList<>();
