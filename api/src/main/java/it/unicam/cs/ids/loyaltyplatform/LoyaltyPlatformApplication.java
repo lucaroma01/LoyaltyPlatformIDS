@@ -3,6 +3,7 @@
  */
 package it.unicam.cs.ids.loyaltyplatform;
 
+import it.unicam.cs.ids.loyaltyplatform.Controller.*;
 import it.unicam.cs.ids.loyaltyplatform.Model.*;
 import it.unicam.cs.ids.loyaltyplatform.Services.DBMSController;
 
@@ -12,6 +13,8 @@ import java.util.Scanner;
 
 public class LoyaltyPlatformApplication {
     private static final Scanner sc = new Scanner(System.in);
+    private static final ControllerRegistrazione controllerRegistrazioni = new ControllerRegistrazione();
+    private static final ControllerPuntoVendita controllerPuntoVendita = new ControllerPuntoVendita();
 
     public static void main(String[] args) throws SQLException, ErrorDate {
         DBMSController.init();
@@ -34,6 +37,63 @@ public class LoyaltyPlatformApplication {
     private static void login() throws SQLException, ErrorDate {
     }
     private static void registrazione() throws SQLException, ErrorDate {
+        boolean flag = false;
+        do {
+            System.out.println("Inserire il nome");
+            String nome = sc.nextLine();
+            System.out.println("Inserire il cognome");
+            String cognome = sc.nextLine();
+            System.out.println("Inserire l' indirizzo");
+            String indirizzo = sc.nextLine();
+            System.out.println("Inserire l' email business");
+            String email = sc.nextLine();
+            System.out.println("Inserire l' username: /n");
+            String username = sc.nextLine();
+            System.out.println("Inserire la password");
+            String password = sc.nextLine();
+            System.out.println("Inserire il numero di telefono");
+            int telefono = sc.nextInt();
+
+            System.out.println("Scegliere il numero per il ruolo con cui ti vuoi registrare: /n");
+            System.out.println("1-Se sei un cliente");
+            System.out.println("2-Se sei un Titolare Punto Vendita");
+            System.out.println("3-Se sei un Commesso Punto Vendita");
+            switch (displayScannerInt()) {
+                case 1 -> {
+                    Cliente c = new Cliente(nome, cognome, indirizzo, email, username, password, telefono);
+                    controllerRegistrazioni.registrazioneCliente(c);
+                    System.out.println("Magnifico, la registrazione alla Loyalty platform é avvenuta con successo" +
+                            ", ora il tuo id é: " + c.getId() + " ");
+                    flag = true;
+                }
+                case 2 -> {
+                    System.out.println("Inserire il nome del punto vendita che gestisci");
+                    String nomePuntoVendita = sc.nextLine();
+                    System.out.println("Inserire indirizzo del punto vendita:");
+                    String indirizzoPuntoVendita = sc.nextLine();
+                    TitolarePuntoVendita t = new TitolarePuntoVendita(nome, cognome, indirizzo, email, username, password, telefono);
+                    controllerRegistrazioni.registrazioneTitolare(t);
+                    PuntoVendita pv = new PuntoVendita(nomePuntoVendita, indirizzoPuntoVendita, t);
+                    controllerPuntoVendita.addPuntoVendita(pv);
+                    System.out.println("Magnifico, la registrazione alla Loyalty platform é avvenuta con successo" +
+                            ", ora il tuo id é: " + t.getId() + " ");
+                    flag = true;
+                }
+
+                case 3 -> {
+                    System.out.println("Inserisci il nome del punto vendita");
+                    String nomePv = sc.nextLine();
+                    controllerRegistrazioni.getAllAbilitati();
+                    controllerPuntoVendita.visualizzaPuntoVendita();
+                    PuntoVendita pv = controllerPuntoVendita.findById(nomePv);
+                    CommessoPuntoVendita cpv = new CommessoPuntoVendita(nome, cognome, indirizzo, email, username, password, telefono, pv);
+                    controllerRegistrazioni.registrazioneCommesso(cpv);
+                    System.out.println("Magnifico, la registrazione alla Loyalty platform é avvenuta con successo" +
+                            ", ora il tuo id é: " + cpv.getId() + " ");
+                    flag = true;
+                }
+            }
+        } while (!flag);
     }
     private static int displayScannerInt() {
         while (true) {
