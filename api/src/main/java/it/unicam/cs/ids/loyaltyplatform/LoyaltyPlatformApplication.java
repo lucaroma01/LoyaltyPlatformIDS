@@ -3,12 +3,47 @@
  */
 package it.unicam.cs.ids.loyaltyplatform;
 
-public class LoyaltyPlatformApplication {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+import it.unicam.cs.ids.loyaltyplatform.Model.*;
+import it.unicam.cs.ids.loyaltyplatform.Services.DBMSController;
 
-    public static void main(String[] args) {
-        System.out.println(new LoyaltyPlatformApplication().getGreeting());
+import java.sql.SQLException;
+import java.util.Scanner;
+
+
+public class LoyaltyPlatformApplication {
+    private static final Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) throws SQLException, ErrorDate {
+        DBMSController.init();
+        boolean flag = false;
+        do {
+            System.out.println("Benvenuti su Loyalty Platform!!/n");
+            System.out.println("Seleziona il numero per scegliere l'azione da eseguire: /n");
+            System.out.println("1-Effettua il login");
+            System.out.println("2-Effettua la registrazione");
+            System.out.println("3-Esci dalla piattaforma");
+            switch (displayScannerInt()) {
+                case 1 -> login();
+                case 2 -> registrazione();
+                case 3 -> flag = true;
+            }
+        } while (!flag);
+
+        System.out.println("Grazie per aver scelto LoyaltyPlatform, buon proseguimento:)");
+    }
+    private static void login() throws SQLException, ErrorDate {
+    }
+    private static void registrazione() throws SQLException, ErrorDate {
+    }
+    private static int displayScannerInt() {
+        while (true) {
+            try {
+                int intero = sc.nextInt();
+                sc.nextLine();
+                return intero;
+            } catch (Exception e) {
+                System.out.println("Cio' che hai inserito non e' un valore numerico, ritenta ");
+            }
+        }
     }
 }
