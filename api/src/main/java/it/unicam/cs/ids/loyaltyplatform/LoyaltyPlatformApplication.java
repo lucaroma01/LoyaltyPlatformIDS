@@ -15,7 +15,7 @@ public class LoyaltyPlatformApplication {
     private static final Scanner sc = new Scanner(System.in);
     private static final ControllerRegistrazione controllerRegistrazioni = new ControllerRegistrazione();
     private static final ControllerPuntoVendita controllerPuntoVendita = new ControllerPuntoVendita();
-
+    private static final ControllerProgrammaFedelta controllerProgrammaFedelta = new ControllerProgrammaFedelta();
     public static void main(String[] args) throws SQLException, ErrorDate {
         DBMSController.init();
         boolean flag = false;
@@ -58,7 +58,8 @@ public class LoyaltyPlatformApplication {
     }
     private static void homeCommesso() throws SQLException, ErrorDate {
     }
-    private static void homeGestore() throws SQLException, ErrorDate {        boolean flag = false;
+    private static void homeGestore() throws SQLException, ErrorDate {
+        boolean flag = false;
         do {
             System.out.println("Seleziona il numero per scegliere l'azione da eseguire: ");
             System.out.println("1- Aggiungere un programma fedelta");
@@ -74,11 +75,39 @@ public class LoyaltyPlatformApplication {
         } while (!flag);
     }
     private static void aggiungi() throws SQLException {
+        System.out.println("Inserire il nome");
+        String nome = sc.nextLine();
+        System.out.println("Inserire la descrizione");
+        String descrizione = sc.nextLine();
+        System.out.println("Inserire 1- per aggiungere un programma punti /n" +
+                "inserire 2- per aggiungere un programma a livelli ");
+        int number = sc.nextInt();
+        if (number == 1) {
+            ProgrammaFedelta programPunti=new ProgrammaFedelta(nome,descrizione);
+
+            controllerProgrammaFedelta.addProgrammaFedelta(programPunti);
+        } else if (number == 2) {
+            ProgrammaFedelta programLivelli = new ProgrammaFedelta(nome,descrizione);
+            controllerProgrammaFedelta.addProgrammaFedelta(programLivelli);
+        } else System.out.println("Tipologia di programma non esistente");
+
+        System.out.println("Il programma é stato inserito");
 
     }
     private static void elimina() throws SQLException {
+        System.out.println("Inserire il nome");
+        String nome = sc.nextLine();
+        System.out.println("Inserire id del programma");
+        int id = sc.nextInt();
+        ProgrammaFedelta programmaFedelta=new ProgrammaFedelta(id,nome);
+
+        controllerProgrammaFedelta.visualizzaProgrammiPunti();
+        controllerProgrammaFedelta.visualizzaProgrammiLivelli();
+        controllerProgrammaFedelta.removeById(programmaFedelta.getId());
+        System.out.println("IL programma" + nome + " é stato eliminato");
 
     }
+
     private static void registrazione() throws SQLException, ErrorDate {
         boolean flag = false;
         do {

@@ -6,7 +6,7 @@ public class ProgrammaPunti extends ProgrammaFedelta{
     private int totPunti;
 
     public ProgrammaPunti(int id, String nome, String descrizione, int importoXCostantePunti, int totPunti) {
-        super(id, nome, descrizione);
+        super( id,nome, descrizione);
         this.importoXCostantePunti = importoXCostantePunti;
         this.totPunti = totPunti;
     }
