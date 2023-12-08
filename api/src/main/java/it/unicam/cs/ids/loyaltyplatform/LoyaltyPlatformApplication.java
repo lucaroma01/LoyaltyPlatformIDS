@@ -35,6 +35,30 @@ public class LoyaltyPlatformApplication {
         System.out.println("Grazie per aver scelto LoyaltyPlatform, buon proseguimento:)");
     }
     private static void login() throws SQLException, ErrorDate {
+        boolean flag = false;
+        do {
+            System.out.println("Seleziona il numero per scegliere il ruolo: /n");
+            System.out.println("1-Cliente");
+            System.out.println("2-Titolare Punto Vendita");
+            System.out.println("3-Commesso Punto Vendita");
+            System.out.println("4-gestore Piattaforma");
+            System.out.println("5-per uscire dal menu login");
+            switch (displayScannerInt()) {
+                case 1 -> homeClienti();
+                case 2 -> homeTitolare();
+                case 3 -> homeCommesso();
+                case 4 -> homeGestore();
+                case 5 -> flag = true;
+            }
+        } while (!flag);
+    }
+    private static void homeClienti() throws SQLException, ErrorDate {
+    }
+    private static void homeTitolare() throws SQLException, ErrorDate {
+    }
+    private static void homeCommesso() throws SQLException, ErrorDate {
+    }
+    private static void homeGestore() throws SQLException, ErrorDate {
     }
     private static void registrazione() throws SQLException, ErrorDate {
         boolean flag = false;
@@ -95,6 +119,7 @@ public class LoyaltyPlatformApplication {
             }
         } while (!flag);
     }
+
     private static int displayScannerInt() {
         while (true) {
             try {
