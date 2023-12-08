@@ -58,7 +58,26 @@ public class LoyaltyPlatformApplication {
     }
     private static void homeCommesso() throws SQLException, ErrorDate {
     }
-    private static void homeGestore() throws SQLException, ErrorDate {
+    private static void homeGestore() throws SQLException, ErrorDate {        boolean flag = false;
+        do {
+            System.out.println("Seleziona il numero per scegliere l'azione da eseguire: ");
+            System.out.println("1- Aggiungere un programma fedelta");
+            System.out.println("2- Elimina programma fedelta");
+            System.out.println("3- Ritorna al menu scelta dei ruoli");
+            switch (displayScannerInt()) {
+                case 1 -> aggiungi();
+                case 2 -> elimina();
+                case 3 -> {
+                    flag = true;
+                }
+            }
+        } while (!flag);
+    }
+    private static void aggiungi() throws SQLException {
+
+    }
+    private static void elimina() throws SQLException {
+
     }
     private static void registrazione() throws SQLException, ErrorDate {
         boolean flag = false;
