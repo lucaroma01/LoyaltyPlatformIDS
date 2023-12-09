@@ -8,6 +8,7 @@ import it.unicam.cs.ids.loyaltyplatform.Model.*;
 import it.unicam.cs.ids.loyaltyplatform.Services.DBMSController;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Scanner;
 
 
@@ -16,6 +17,8 @@ public class LoyaltyPlatformApplication {
     private static final ControllerRegistrazione controllerRegistrazioni = new ControllerRegistrazione();
     private static final ControllerPuntoVendita controllerPuntoVendita = new ControllerPuntoVendita();
     private static final ControllerProgrammaFedelta controllerProgrammaFedelta = new ControllerProgrammaFedelta();
+    private static final ControllerCarta controllerCarta = new ControllerCarta();
+    private static final ControllerCoupon controllerCoupon = new ControllerCoupon();
     public static void main(String[] args) throws SQLException, ErrorDate {
         DBMSController.init();
         boolean flag = false;
@@ -57,6 +60,77 @@ public class LoyaltyPlatformApplication {
     private static void homeTitolare() throws SQLException, ErrorDate {
     }
     private static void homeCommesso() throws SQLException, ErrorDate {
+        boolean flag = false;
+        CommessoPuntoVendita cpv = null;
+        do {
+            System.out.println("Inserire l' username: /n");
+            String username = sc.nextLine();
+            System.out.println("Inserire la password");
+            String password = sc.nextLine();
+            boolean locale = false;
+            for (CommessoPuntoVendita c : controllerRegistrazioni.visualizzaCommessi()) {
+                if (c.getUsername().equals(username) && c.getPassword().equals(password)) {
+                    c = new CommessoPuntoVendita(c.getId(), c.getNome(), c.getCognome(), c.getIndirizzo(), c.getEmail(), c.getUsername(), c.getPassword(), c.getTelefono(), c.getPuntoVendita());
+                    locale = true;
+                }
+            }
+            if (!locale) {
+                System.out.println("Username o password con valori errati");
+                flag = true;
+            }
+            if (locale) {
+                System.out.println("Benvenuto " + cpv.getUsername() + " : id " + cpv.getId() + "");
+                System.out.println("Seleziona l'operazione da eseguire");
+                System.out.println("1 - Creazione carta");
+                System.out.println("2 - Incrementa carta");
+                System.out.println("3 - Ritorna al menu scelta dei ruoli");
+        }
+            switch (displayScannerInt()) {
+                case 1 -> {
+                    controllerRegistrazioni.visualizzaClienti();
+                    System.out.println("Inserire il nome della carta da creare");
+                    String nomeCarta = sc.nextLine();
+                    System.out.println("Inserire la scadenza della carta");
+                    long scadenzaCarta = sc.nextLong();
+                    System.out.println(controllerRegistrazioni.toStringCliente());
+                    System.out.println("Inserire l'id del cliente che vuole creare la carta");
+                    int idCliente = sc.nextInt();
+                    Date scadenzaCf = new Date(scadenzaCarta);
+                    CartaFedelta cf = new CartaFedelta(nomeCarta, scadenzaCf, cpv.getPuntoVendita(), controllerRegistrazioni.getById(idCliente));
+                    controllerCarta.addCartaFedelta(cf);
+                    System.out.println("La carta del cliente " + idCliente + " é stata creata");
+                    flag = true;
+                }
+                case 2 -> {
+                    controllerRegistrazioni.visualizzaClienti();
+                    System.out.println(controllerRegistrazioni.toStringCliente());
+                    System.out.println("Inserisci l'id del cliente per aumentare la sua carta");
+                    int idCliente = sc.nextInt();
+                    controllerCarta.visualizzaCartaFedelta(controllerRegistrazioni.getById(idCliente));
+                    System.out.println(controllerCarta.toString());
+                    System.out.println("Inserisci l'id della carta del cliente selezionato");
+                    int idCarta = sc.nextInt();
+                    controllerPuntoVendita.visualizzaProgrammiPuntiTitolare(cpv.getPuntoVendita());
+                    controllerPuntoVendita.visualizzaProgrammiLivelliTitolare(cpv.getPuntoVendita());
+                    System.out.println(controllerPuntoVendita.toString());
+                    System.out.println("Inserisci l'id del programma che vuoi utilizzare per la carta");
+                    int idPf = sc.nextInt();
+                    System.out.println("Inserisci la spesa effettuata dal cliente");
+                    int spesa = sc.nextInt();
+                    controllerCoupon.viusalizzaCoupon(cpv.getPuntoVendita());
+                    System.out.println(controllerCoupon.toString());
+                    System.out.println("Inserisci il coupon che potrebbe essere riscattato");
+                    int coupon = sc.nextInt();
+                    cpv.incrementaCarta(spesa, controllerPuntoVendita.searchById(idPf), controllerCarta.searchById(idCarta), controllerCoupon.searchById(coupon));
+                    System.out.println("La carta é stata incrementata con successo");
+                    flag = true;
+                }
+                case 3 -> {
+                    flag = true;
+                }
+            }
+        }
+        while (!flag);
     }
     private static void homeGestore() throws SQLException, ErrorDate {
         boolean flag = false;

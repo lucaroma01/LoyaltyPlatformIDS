@@ -135,6 +135,18 @@ public class ControllerRegistrazione {
         return cliente;
     }
 
+    public String toStringCliente() {
+        String string = "";
+        for (Cliente c : clienti ){
+            string+= "id: ["+c.getId()+"] \n" +
+                    "nome: ["+c.getNome()+"] \n" +
+                    "cognome: ["+c.getCognome()+"]\n" +
+                    "indirizzo: ["+c.getIndirizzo()+"]\n" +
+                    "email: ["+c.getEmail()+"]\n" +
+                    "------------------------------------ \n";
+        }
+        return string;
+    }
 }
 
 
