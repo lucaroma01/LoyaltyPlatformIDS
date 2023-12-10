@@ -57,6 +57,57 @@ public class LoyaltyPlatformApplication {
         } while (!flag);
     }
     private static void homeClienti() throws SQLException, ErrorDate {
+        boolean flag=false;
+        Cliente cliente= null;
+        do {
+            System.out.println("Inserire il username: /n");
+            String username = sc.nextLine();
+            System.out.println("Inserire la password");
+            String password = sc.nextLine();
+            boolean locale = false;
+            for (Cliente c : controllerRegistrazioni.visualizzaClienti()) {
+                if (c.getUsername().equals(username) && c.getPassword().equals(password)) {
+                    cliente= new Cliente(c.getId(), c.getNome(), c.getCognome(), c.getIndirizzo(), c.getEmail(), c.getUsername(), c.getPassword(), c.getTelefono());
+                    locale = true;
+                }
+            }
+            if (!locale) {
+                System.out.println("Username o password con valori errati");
+                flag = true;
+            }
+            if(locale)
+            {
+                System.out.println("Benvenuto "+ cliente.getUsername()+" : id "+cliente.getId()+"");
+                System.out.println("Seleziona l'operazione da eseguire");
+                System.out.println("1-Cerca Punto vendita");
+                System.out.println("2-Visualizza profilo");
+                System.out.println("3-Ritorna al menu scelta dei ruoli");
+                switch (displayScannerInt()){
+                    case 1->{
+                        controllerPuntoVendita.visualizzaPuntoVendita();
+                        System.out.println(controllerPuntoVendita.toStringPuntiVendita());
+                        System.out.println("inserire il nome di un punto vendita esistente");
+                        String nomePv=sc.nextLine();
+                        System.out.println("Inserire il nome della carta da creare");
+                        String nomeCarta=sc.nextLine();
+                        System.out.println("Inserire la scadenza della carta");
+                        long scadenzaCarta= sc.nextLong();
+                        Date scadenzaCf= new Date(scadenzaCarta);
+                        CartaFedelta cf= new CartaFedelta(nomeCarta,scadenzaCf,controllerPuntoVendita.findById(nomePv),cliente);
+                        cliente.creaCarta(cf);
+                        System.out.println("Ottimo Hai creato la carta fedelta con "+nomePv+"");
+                        flag=true;
+                    }
+                    case 2->{
+                        controllerCarta.visualizzaCartaFedelta(cliente);
+                        System.out.println("Lista delle proprie carte fedelta");
+                        System.out.println(controllerCarta.toString());
+                        flag=true;
+                    }
+                    case 3->{flag=true;}
+                }
+            }
+        }while(!flag);
     }
     private static void homeTitolare() throws SQLException, ErrorDate, AbilitationException {
         boolean flag=false;
