@@ -135,6 +135,11 @@ public class ControllerRegistrazione {
         return cliente;
     }
 
+    public void updateCarta(TitolarePuntoVendita t, CartaDiCredito cc) throws SQLException {
+        String query="UPDATE titolari SET id_cc = '" + cc.getNumeroCarta() + "' WHERE id_t = '" + t.getId() + "'";
+        DBMSController.insertQuery(query);
+    }
+
     public String toStringCliente() {
         String string = "";
         for (Cliente c : clienti ){
@@ -147,6 +152,8 @@ public class ControllerRegistrazione {
         }
         return string;
     }
+
+
 }
 
 

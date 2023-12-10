@@ -9,12 +9,12 @@ public class CartaDiCredito {
 
     private Date dateScadenza;
 
-    private int CVV;
+    private String CVV;
 
-    private int pin;
+    private String pin;
     private double saldoCarta;
-    public CartaDiCredito(int numeroCarta, Date dateScadenza, int CVV, int pin) throws ErrorDate {
-        if (pin==5 && CVV==3) {
+    public CartaDiCredito(int numeroCarta, Date dateScadenza, String CVV, String pin) throws ErrorDate {
+        if (pin.length() == 5 && CVV.length() == 3) {
             this.numeroCarta = numeroCarta;
             this.dateScadenza = dateScadenza;
             this.CVV = CVV;
@@ -23,8 +23,8 @@ public class CartaDiCredito {
         }
     }
 
-    public CartaDiCredito(int numeroCarta, Date dateScadenza, int CVV, int pin, double saldoCarta) {
-        if (pin==5 && CVV==3) {
+    public CartaDiCredito(int numeroCarta, Date dateScadenza, String CVV, String pin, double saldoCarta) {
+        if (pin.length() == 5 && CVV.length() == 3) {
             this.numeroCarta = numeroCarta;
             this.dateScadenza = dateScadenza;
             this.CVV = CVV;
@@ -53,11 +53,11 @@ public class CartaDiCredito {
         return dateScadenza;
     }
 
-    public int getCVV() {
+    public String getCVV() {
         return CVV;
     }
 
-    public int getPin() {
+    public String getPin() {
         return pin;
     }
 

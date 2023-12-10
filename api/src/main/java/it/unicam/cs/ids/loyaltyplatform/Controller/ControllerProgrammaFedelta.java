@@ -18,7 +18,7 @@ public class ControllerProgrammaFedelta {
     }
 
     public void addProgrammaFedelta(ProgrammaFedelta programmaFedelta) throws SQLException {
-        if(searchById(programmaFedelta.getId()))
+        if(searchById(programmaFedelta.getId()) == programmaFedelta)
             throw new IllegalArgumentException("Programma gia inserito");
         listaProgrammi.add(programmaFedelta);
         String query = "";
@@ -53,12 +53,15 @@ public class ControllerProgrammaFedelta {
         return this.listaProgrammi;
     }
 
-    private boolean searchById(int id) {
+    public ProgrammaFedelta searchById(int id) throws SQLException{
+        ProgrammaFedelta programmaFedelta = null;
         for(ProgrammaFedelta p : this.listaProgrammi){
             if(p.getId() == id)
-                return  true;
+                programmaFedelta = p;
         }
-        return false;
+        if(programmaFedelta == null)
+            throw new NullPointerException();
+        return programmaFedelta;
     }
     public boolean removeById(int id) throws SQLException {
         for (ProgrammaFedelta p : this.listaProgrammi) {
@@ -76,6 +79,18 @@ public class ControllerProgrammaFedelta {
         return false;
     }
 
+    public void addProgrammiTitolari(TitolarePuntoVendita t, int id) throws SQLException, ErrorDate {
+        if (searchById(id) != null) {
+            if (searchById(id) instanceof ProgrammaPunti pp) {
+                String query = "INSERT INTO programpuntititolare (id_ppt, nome_ppt, descrizione_ppt, importoxcostantepunti_ppt, totpunti_ppt, titolariid) VALUES('" + pp.getId() + "','" + pp.getNome() + "','" + pp.getDescrizione() + "', '" + pp.getImportoXCostantePunti() + "', '" + pp.getTotPunti() + "', '" + t.getId() + "')";
+                DBMSController.insertQuery(query);
+            } else if (searchById(id) instanceof ProgrammaLivelli pl) {
+                String query = "INSERT INTO programlivellititolare (id_plt, nome_plt, descrizione_plt, livellomax_plt, puntilivello, percentualelivelloximporto_plt, titolariid) VALUES('" + pl.getId() + "','" + pl.getNome() + "','" + pl.getDescrizione() + "', '" + pl.getLivelloMax() + "', '" + pl.getPuntiLivello() + "', '" + pl.getPercentualeLivelloXImporto() + "', '" + t.getId() + "')";
+                DBMSController.insertQuery(query);
+            }
+        }else  throw new ErrorDate();
+    }
+
     @Override
     public String toString() {
         String string ="";
@@ -87,4 +102,18 @@ public class ControllerProgrammaFedelta {
         }
         return string;
     }
+
+    public void updateProgrammaGestore(ProgrammaFedelta pf) throws SQLException, ErrorDate {
+        if (searchById(pf.getId()) != null) {
+            if (searchById(pf.getId()) instanceof ProgrammaPunti pp) {
+                String query = "UPDATE programpunti SET importoxcostantepunti = '" + pp.getImportoXCostantePunti() + "',totpunti = '" + pp.getTotPunti() + "' WHERE id_pp = '" + pp.getId() + "'";
+                DBMSController.insertQuery(query);
+            } else if (searchById(pf.getId()) instanceof ProgrammaLivelli pl) {
+                String query = "UPDATE programlivelli SET livellomax = '" + pl.getLivelloMax() + "',puntilivello = '" + pl.getPuntiLivello() + "', percentualeLivelloXImporto ='" + pl.getPercentualeLivelloXImporto() + "' WHERE id_pl = '" + pl.getId() + "'";
+                DBMSController.insertQuery(query);
+            }
+        } else throw new ErrorDate();
+
+    }
+
 }

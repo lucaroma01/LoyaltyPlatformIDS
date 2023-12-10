@@ -42,7 +42,7 @@ public class ControllerPagamento {
         ResultSet resultSet= DBMSController.selectAllFromTable(table);
         while (resultSet.next()){
             CartaDiCredito cc= new CartaDiCredito(resultSet.getInt("id_cc"),resultSet.getDate("scadenza_cc"),
-                    resultSet.getInt("cvv"),resultSet.getInt("pin"),
+                    resultSet.getString("cvv"),resultSet.getString("pin"),
                     resultSet.getDouble("saldocarta"));
             this.listaCartaDiCredito.add(cc);
         }

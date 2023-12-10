@@ -3,6 +3,8 @@ package it.unicam.cs.ids.loyaltyplatform.Model;
 import it.unicam.cs.ids.loyaltyplatform.Controller.ControllerProgrammaFedelta;
 import it.unicam.cs.ids.loyaltyplatform.Controller.ControllerRegistrazione;
 
+import java.sql.SQLException;
+
 public class TitolarePuntoVendita extends VisitatoreGenerico{
     private final ControllerRegistrazione effettuaRegistrazione;
 
@@ -39,5 +41,20 @@ public class TitolarePuntoVendita extends VisitatoreGenerico{
 
     public boolean isAbilitato() {
         return abilitato;
+    }
+
+    public void effettuaPagamento() throws ErrorDate, SQLException {
+        effettuaRegistrazione.addTitolarePuntoVendita(this);
+        abilitato=true;
+    }
+
+    public void aggiungiProgrammaFedeltaPuntoVendita(int id) throws AbilitationException, SQLException, ErrorDate {
+        if(abilitato){
+            this.creaProgrammaFedelta.visualizzaProgrammiPunti();
+            this.creaProgrammaFedelta.visualizzaProgrammiLivelli();
+            this.creaProgrammaFedelta.addProgrammiTitolari(this, id);
+        }else{
+            throw new AbilitationException("Esercente non abilitato alla piattaforma");
+        }
     }
 }
