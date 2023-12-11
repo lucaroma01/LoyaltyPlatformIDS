@@ -7,7 +7,7 @@ public class DBMSController {
     //connessione al database
     private static final String url = "jdbc:postgresql://localhost:5432/LoyaltyPlatform";
     private static final String username = "postgres";
-    private static final String password = "PostgresIds";
+    private static final String password = "PostgreIds";
     private static Connection conn;
 
     public static void init(){

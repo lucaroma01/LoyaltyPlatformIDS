@@ -74,7 +74,7 @@ public class ControllerRegistrazione {
     }
 
     public List<Cliente> visualizzaClienti() throws SQLException, ErrorDate {
-        String t = "titolari";
+        String t = "clienti";
         ResultSet resultSet = DBMSController.selectAllFromTable(t);
         while(resultSet.next()){
             Cliente c = new Cliente(resultSet.getInt("id_c"),
